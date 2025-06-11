@@ -1,0 +1,80 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 42
+#endif
+
+char *ft_strdup(char *s)
+{
+	int i = 0;
+	int l = 0;
+	while(s[i])
+		l++;
+	char *t = malloc(l + 1);
+	if(!t)
+		return NULL;
+	while(s[i])
+	{
+		t[i] = s[i];
+		i++;
+	}
+	t[i] = '\0';
+	return t;
+}
+
+char *gnl(int fd)
+{
+	static char buf[BUFFER_SIZE];
+	char line[10000];
+	static int a;
+	static int b = 0;
+	int i = 0;
+
+	if(fd < 0 || BUFFER_SIZE <= 0)
+		return NULL;
+	while(1)
+	{
+		if(a >= b)
+		{
+			a = 0;
+			b = read(fd , buf, BUFFER_SIZE);
+			if(b <= 0)
+			{
+				a = 0;
+				b = 0;
+				break;
+			}
+		}
+		line[i] = buf[a];
+		i++;
+		a++;
+		if(line[i - 1] =='\n'|| i >= 10000)
+			break;
+	}
+	line[i] = '\0';
+	if(i == 0)
+		return NULL;
+	return(ft_strdup(line));
+}
+
+int main()
+{
+	char *l;
+	int fd = open("gnl.c", O_RDONLY);
+	if (fd < 0) 
+	{
+		perror("Error opening file");
+		return 1;
+	}
+	
+	while ((l = gnl(fd)) != NULL)
+	{
+		printf("%s", l);
+		free(l);
+	}
+	
+	return 0;
+}
