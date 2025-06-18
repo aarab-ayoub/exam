@@ -28,10 +28,11 @@ char *sort(char *av)
 	return result;
 }
 
-void perm(char *str , char *result ,int *used , int index , int res_i , int len)
+void perm(char *str, char *result, char *used, int index, int res_i, int len)
 {
 	if(res_i == len)
 	{
+		result[res_i] = '\0';
 		printf("%s\n", result);
 		return;
 	}
@@ -53,7 +54,13 @@ int main(int argc, char **argv)
 
 	char *str = sort(argv[1]);
 	char *result = malloc(strlen(str) + 1);
-	int *used = calloc(strlen(str),1);
+	char *used = calloc(strlen(str), 1); 
 	
-	perm(str, result,used , 0 , 0 ,strlen(str)); 
+	perm(str, result, used, 0, 0, strlen(str));
+	
+	free(str);
+	free(result);
+	free(used);
+	
+	return 0;
 }
