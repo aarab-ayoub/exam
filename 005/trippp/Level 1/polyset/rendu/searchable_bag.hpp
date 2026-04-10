@@ -1,7 +1,4 @@
 //
-
-#ifndef DEA00068_84B6_4BD0_A8CF_15968E97B811
-#define DEA00068_84B6_4BD0_A8CF_15968E97B811
 // Created by citron on 01/03/23.
 //
 
@@ -16,6 +13,3 @@ public:
 
 
 #endif //EXAM_ASSIGNMENTS_SORTABLE_HPP
-
-
-#endif /* DEA00068_84B6_4BD0_A8CF_15968E97B811 */
